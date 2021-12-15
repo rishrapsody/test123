@@ -1,0 +1,311 @@
+{
+	"info": {
+		"_postman_id": "2103f623-943a-429e-b488-715c16872113",
+		"name": "Network-object-config-Bulk",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "login (domain)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"try {\r",
+							"    var sid = JSON.parse(responseBody).sid;\r",
+							"    postman.setEnvironmentVariable(\"session\", sid);\r",
+							"    tests[\"login session-id = \" + sid] = true;\r",
+							"} catch (e) {}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-chkp-sid",
+						"value": "{{session}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"user\" : \"{{user}}\",\r\n  \"password\" : \"{{password}}\",\r\n  \"domain\" : \"{{domain}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{server}}/v1.6.1/login",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"v1.6.1",
+						"login"
+					]
+				},
+				"description": "Login to certain domain"
+			},
+			"response": [
+				{
+					"name": "login (domain)",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"user\" : \"{{name}}\",\r\n  \"password\" : \"{{password}}\",\r\n  \"domain\" : \"{{domain}}\"\r\n}"
+						},
+						"url": {
+							"raw": "{{server}}/v1.6.1/login",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"v1.6.1",
+								"login"
+							]
+						},
+						"description": "Login to certain domain"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "javascript",
+					"header": [],
+					"cookie": [],
+					"body": "{\r\n  \"sid\" : \"3MgL4mBU2NfzuFjl5RxlgtRX6Hc8ZYyIR0FP_3RYHAU\",\r\n  \"url\" : \"https://192.0.2.1:443/web_api\",\r\n  \"uid\" : \"7586af28-7375-4e19-a052-cb083d918dd0\",\r\n  \"session-timeout\" : 600,\r\n  \"last-login-was-at\" : {\r\n    \"posix\" : 1430032266851,\r\n    \"iso-8601\" : \"2015-04-26T10:11+0300\"\r\n  }\r\n}"
+				}
+			]
+		},
+		{
+			"name": "Add-network-bulk",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"//console.log(pm);",
+							"//console.log(responseBody.warnings);",
+							"//pm.test(responseBody, false)",
+							"pm.test(responseBody, true)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-chkp-sid",
+						"value": "{{session}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\" : \"{{name}}\",\n  \"subnet\" : \"{{subnet}}\",\n  \"subnet-mask\" : \"{{subnet-mask}}\"\n}"
+				},
+				"url": {
+					"raw": "{{server}}/v1.6.1/add-network",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"v1.6.1",
+						"add-network"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "publish",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-chkp-sid",
+						"value": "{{session}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ }"
+				},
+				"url": {
+					"raw": "{{server}}/v1.6.1/publish",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"v1.6.1",
+						"publish"
+					]
+				},
+				"description": "Publish the last changes. Use the show-task command to check the progress of the task."
+			},
+			"response": [
+				{
+					"name": "publish",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-chkp-sid",
+								"value": "{{session}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ }"
+						},
+						"url": {
+							"raw": "{{server}}/v1.6.1/publish",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"v1.6.1",
+								"publish"
+							]
+						},
+						"description": "Publish the last changes. Use the show-task command to check the progress of the task."
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "javascript",
+					"header": [],
+					"cookie": [],
+					"body": "{\r\n  \"task-id\" : \"01234567-89ab-cdef-a930-8c37a59972b3\"\r\n}"
+				}
+			]
+		},
+		{
+			"name": "logout",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-chkp-sid",
+						"value": "{{session}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ }"
+				},
+				"url": {
+					"raw": "{{server}}/v1.6.1/logout",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"v1.6.1",
+						"logout"
+					]
+				},
+				"description": "Log out from the existing session"
+			},
+			"response": [
+				{
+					"name": "logout",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-chkp-sid",
+								"value": "{{session}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ }"
+						},
+						"url": {
+							"raw": "{{server}}/v1.6.1/logout",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"v1.6.1",
+								"logout"
+							]
+						},
+						"description": "Log out from the existing session"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "javascript",
+					"header": [],
+					"cookie": [],
+					"body": "{\r\n  \"message\" : \"OK\"\r\n}"
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "domain",
+			"value": "enter_cust_domain_name"
+		}
+	]
+}
