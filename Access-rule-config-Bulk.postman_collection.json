@@ -1,0 +1,302 @@
+{
+	"info": {
+		"_postman_id": "4f151d94-11a5-4312-a4e8-439337db5787",
+		"name": "Access-rule-config-Bulk",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "login (domain)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"try {\r",
+							"    var sid = JSON.parse(responseBody).sid;\r",
+							"    postman.setEnvironmentVariable(\"session\", sid);\r",
+							"    tests[\"login session-id = \" + sid] = true;\r",
+							"} catch (e) {}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-chkp-sid",
+						"value": "{{session}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"user\" : \"{{user}}\",\r\n  \"password\" : \"{{password}}\",\r\n  \"domain\" : \"{{domain}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{server}}/v1.6.1/login",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"v1.6.1",
+						"login"
+					]
+				},
+				"description": "Login to certain domain"
+			},
+			"response": [
+				{
+					"name": "login (domain)",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"user\" : \"{{user}}\",\r\n  \"password\" : \"{{password}}\",\r\n  \"domain\" : \"{{domain}}\"\r\n}"
+						},
+						"url": {
+							"raw": "{{server}}/v1.6.1/login",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"v1.6.1",
+								"login"
+							]
+						},
+						"description": "Login to certain domain"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "javascript",
+					"header": [],
+					"cookie": [],
+					"body": "{\r\n  \"sid\" : \"3MgL4mBU2NfzuFjl5RxlgtRX6Hc8ZYyIR0FP_3RYHAU\",\r\n  \"url\" : \"https://192.0.2.1:443/web_api\",\r\n  \"uid\" : \"7586af28-7375-4e19-a052-cb083d918dd0\",\r\n  \"session-timeout\" : 600,\r\n  \"last-login-was-at\" : {\r\n    \"posix\" : 1430032266851,\r\n    \"iso-8601\" : \"2015-04-26T10:11+0300\"\r\n  }\r\n}"
+				}
+			]
+		},
+		{
+			"name": "add-access-rule to the top of the rulebase",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(responseBody, true)",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-chkp-sid",
+						"value": "{{session}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"layer\" : \"{{package}} Network\",\r\n  \"position\" : \"top\",\r\n  \"name\" : \"{{name}}\",\r\n  \"source\" : \"{{source}}\",\r\n  \"destination\" : \"{{destination}}\",\r\n  \"vpn\" : \"{{vpn}}\",\r\n  \"service\" : \"{{services}}\",\r\n  \"action\" : \"{{action}}\",\r\n  \"track\" : \"{{track}}\",\r\n  \"comments\" : \"{{comments}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{server}}/v1.6.1/add-access-rule",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"v1.6.1",
+						"add-access-rule"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "publish",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-chkp-sid",
+						"value": "{{session}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ }"
+				},
+				"url": {
+					"raw": "{{server}}/v1.6.1/publish",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"v1.6.1",
+						"publish"
+					]
+				},
+				"description": "Publish the last changes. Use the show-task command to check the progress of the task."
+			},
+			"response": [
+				{
+					"name": "publish",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-chkp-sid",
+								"value": "{{session}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ }"
+						},
+						"url": {
+							"raw": "{{server}}/v1.6.1/publish",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"v1.6.1",
+								"publish"
+							]
+						},
+						"description": "Publish the last changes. Use the show-task command to check the progress of the task."
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "javascript",
+					"header": [],
+					"cookie": [],
+					"body": "{\r\n  \"task-id\" : \"01234567-89ab-cdef-a930-8c37a59972b3\"\r\n}"
+				}
+			]
+		},
+		{
+			"name": "verify-policy",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-chkp-sid",
+						"value": "{{session}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"policy-package\" : \"{{package}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{server}}/v1.6.1/verify-policy",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"v1.6.1",
+						"verify-policy"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "install-policy",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-chkp-sid",
+						"value": "{{session}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"policy-package\" : \"{{package}}\",\r\n  \"access\" : true,\r\n  \"threat-prevention\" : true,\r\n  \"targets\" : [ \"{{gateway}}\" ]\r\n}"
+				},
+				"url": {
+					"raw": "{{server}}/v1.6.1/install-policy",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"v1.6.1",
+						"install-policy"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"pm.test(\"Status code is 200\", function () {",
+					"    pm.response.to.have.status(200);",
+					"});"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "package",
+			"value": "your_cust_policy_package"
+		},
+		{
+			"key": "domain",
+			"value": "your_cust_domain_name"
+		},
+		{
+			"key": "gateway",
+			"value": "your_cust_gateway"
+		}
+	]
+}
